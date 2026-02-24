@@ -7,5 +7,7 @@ class LoginBloc extends Bloc<Loginevent,LoginState>{
     on<Login>((event, emit) => emit(LoggedIn(user: event.user)));
     on<Logout>((event, emit) => emit(LogOut()));
     on<ToggleLogin>((_,_)=>emit(CreateAccount()));
+    on<CreateAccountEvent>((event, emit) => emit(LoggedIn(user: event.user)));
+
   }
 }

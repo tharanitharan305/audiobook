@@ -7,12 +7,14 @@ class YourDocument {
   final String id;
   final File file;
   final String finalName;
-  final String dateTime;
+  final DateTime dateTime;
+  final double size;
 
   YourDocument({
     String? id,
     required this.file,
     required this.finalName,
     required this.dateTime,
-  }) : id = id ?? uuid.v4();
+  })  : id = id ?? uuid.v4(),
+        size = file.lengthSync().toDouble();
 }
