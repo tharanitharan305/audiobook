@@ -1,3 +1,4 @@
+import 'package:audiobook/audio/data/audioService.dart';
 import 'package:audiobook/home.dart';
 import 'package:audiobook/summarize/bloc/summary_bloc.dart';
 import 'package:audiobook/summarize/data/summary_service.dart';
@@ -8,11 +9,10 @@ import 'package:audiobook/theme/data/theme_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'audio/bloc/audio_bloc.dart';
 import 'dashboard/bloc/dashboard_bloc.dart';
 import 'dashboard/data/dashboard_repo.dart';
 import 'dashboard/data/dashboard_service.dart';
-import 'dashboard/ui/dashboard.dart';
 import 'login/bloc/loginBloc.dart';
 import 'login/bloc/loginState.dart';
 import 'login/ui/loginui.dart';
@@ -26,19 +26,26 @@ final dashboardRepo = DashboardRepo(service: dashBoardService);
 final dashboardBloc = DashboardBloc(dashboardRepo: dashboardRepo);
 final summaryService = SummaryService();
 final summaryBloc = SummaryBloc(service: summaryService);
+final audioEngineService=AudioEngineService()..init();
+final audioService=MockAudioService();
+final audioBloc=AudioBloc(documentService: audioService, engine: audioEngineService);
+
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (_) => themeService),
         RepositoryProvider(create: (_) => dashboardRepo),
-        RepositoryProvider(create: (_)=> summaryService)
+        RepositoryProvider(create: (_)=> summaryService),
+        RepositoryProvider(create: (_)=>audioEngineService),
+        RepositoryProvider(create: (_)=>audioService),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => themeBloc),
           BlocProvider(create: (_) => loginBloc),
           BlocProvider(create: (_) => dashboardBloc),
-          BlocProvider(create: (_)=>summaryBloc)
+          BlocProvider(create: (_)=>summaryBloc),
+          BlocProvider(create: (_)=>audioBloc)
         ],
         child: const MyApp(),
       ),

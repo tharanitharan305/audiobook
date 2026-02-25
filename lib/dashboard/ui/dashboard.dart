@@ -1,12 +1,9 @@
+import 'package:audiobook/audio/widget/miniPlayer.dart';
 import 'package:audiobook/dashboard/bloc/dashboard_event.dart';
 import 'package:audiobook/dashboard/widget/docCard.dart';
 import 'package:audiobook/dashboard/widget/fileUpload.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../theme/bloc/themeBloc.dart';
-import '../../theme/bloc/themeEvent.dart';
-import '../../theme/bloc/themeState.dart';
 import '../bloc/dashboard_bloc.dart';
 import '../bloc/dashboard_state.dart';
 class Dashboard extends StatefulWidget {
@@ -34,6 +31,8 @@ class _DashboardState extends State<Dashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Dashboard",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+              //if(context.read<AudioBloc>().state.isPlaying)
+                MiniAudioPlayer(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Uploader(),

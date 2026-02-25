@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../audio/data/model.dart';
 import 'model.dart';
 
 
@@ -32,6 +33,14 @@ class SummaryService {
               "Point 3",
             ], id: '',
           ), id: '',
+          audioChapter:    AudioChapter(
+            id: _uuid.v4(),
+            title: "Introduction",
+            subtitle: "Getting started",
+            startTime: const Duration(seconds: 10),
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
         ),Chapter(
           title: "Introduction",
           subtitle: "Overview of Topic",
@@ -44,7 +53,14 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter:  AudioChapter(
+          id: _uuid.v4(),
+          title: "Introduction",
+          subtitle: "Getting started",
+          startTime: const Duration(seconds: 60),
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        ),
         ),Chapter(
           title: "Introduction2",
           subtitle: "Overview of Topic",
@@ -57,7 +73,7 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter: null
         ),Chapter(
           title: "Introduction3",
           subtitle: "Overview of Topic",
@@ -70,7 +86,7 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter: null
         ),Chapter(
           title: "Introduction4",
           subtitle: "Overview of Topic",
@@ -83,7 +99,7 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter: null
         ),Chapter(
           title: "Introduction5",
           subtitle: "Overview of Topic",
@@ -96,7 +112,7 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter: null
         ),Chapter(
           title: "Introduction6",
           subtitle: "Overview of Topic",
@@ -109,12 +125,12 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter: null
         ),Chapter(
           title: "Introduction7",
           subtitle: "Overview of Topic",
           para:
-          "This is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.This is a sample paragraph fetched from mock network.This is a sample paragraph fetched from mock network.This is a sample paragraph fetched from mock network.\nThis is a sample paragraph fetched from mock network.",
+          "This is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.\n\nThis is a sample paragraph fetched from mock network.This is a sample paragraph fetched from mock network.This is a sample paragraph fetched from mock network.This is a sample paragraph fetched from mock network.\nThis is a sample paragraph fetched from mock network.",
           fontSize: 16,
           keypoints: KeyPoints(
             points: [
@@ -122,7 +138,7 @@ class SummaryService {
               "Point 2",
               "Point 3",
             ], id: '',
-          ), id: '',
+          ), id: '',  audioChapter: null
         ),
       ],
     );

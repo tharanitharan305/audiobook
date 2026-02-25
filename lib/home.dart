@@ -1,4 +1,5 @@
 import 'package:audiobook/audio/data/audioService.dart';
+import 'package:audiobook/audio/ui/full_player_Screen.dart';
 import 'package:audiobook/summarize/ui/summaryList.dart';
 import 'package:audiobook/theme/bloc/themeBloc.dart';
 import 'package:audiobook/theme/bloc/themeEvent.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> pages = [
     const Dashboard(),
     const SavedSummariesScreen(),
-    AudioChapterScreen(documentId: '',service: MockAudioService(),),
+    FullAudioPlayer()
   ];
 
   @override

@@ -1,3 +1,6 @@
+import 'package:audiobook/audio/bloc/audio_bloc.dart';
+import 'package:audiobook/audio/bloc/audio_event.dart';
+import 'package:audiobook/audio/widget/miniPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/model.dart';
@@ -17,7 +20,13 @@ class SummaryScreen extends StatefulWidget {
 class _SummaryScreenState extends State<SummaryScreen> {
   int selectedIndex = 0;
   bool isSaved = false;
-
+bool? sync(BuildContext context){
+  if(widget.summary.chapters[selectedIndex].audioChapter!=null) {
+    context.read<AudioBloc>().add(SeekAudio(widget.summary.chapters[selectedIndex].audioChapter!.startTime));
+    return true;
+  }
+  return null;
+}
   @override
   Widget build(BuildContext context) {
     final chapter = widget.summary.chapters[selectedIndex];
@@ -42,6 +51,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
       },
       child: Scaffold(
         backgroundColor: colorScheme.background,
+        floatingActionButton: MiniAudioPlayer(isFloating: true,onSync: (){
+          sync(context);
+        },),
         appBar: isDesktop
             ? null
             : AppBar(
@@ -168,6 +180,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
       },
     );
   }
+
   /// =========================
   /// Desktop Chapter Panel
   /// =========================
@@ -203,6 +216,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 return GestureDetector(
                   onTap: () {
                     setState(() => selectedIndex = index);
+                    Navigator.pop(context);
                   },
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 12),
@@ -259,12 +273,15 @@ class _SummaryScreenState extends State<SummaryScreen> {
       padding:
       const EdgeInsets.symmetric(horizontal: 48, vertical: 32),
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 800),
           child: Column(
             crossAxisAlignment:
             CrossAxisAlignment.start,
             children: [
+
+              const SizedBox(height: 24),
               Text(
                 "Chapter ${selectedIndex + 1}",
                 style: TextStyle(

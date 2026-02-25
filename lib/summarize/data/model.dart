@@ -1,4 +1,6 @@
 
+import 'package:audiobook/audio/data/model.dart';
+
 class Summarize {
   final String id;
   final List<Chapter> chapters;
@@ -32,8 +34,9 @@ class Chapter {
   final String title;
   final String subtitle;
   final double fontSize;
-
+final AudioChapter? audioChapter;
   Chapter({
+    required this.audioChapter,
     required this.id,
     required this.keypoints,
     required this.para,
@@ -44,6 +47,7 @@ class Chapter {
 
   factory Chapter.fromJson(Map<String, dynamic> json) {
     return Chapter(
+      audioChapter: AudioChapter.fromJson(json['audioChapter']),
       id: json['id'],
       keypoints: KeyPoints.fromJson(json['keypoints']),
       para: json['para'],
@@ -61,6 +65,7 @@ class Chapter {
       'title': title,
       'subtitle': subtitle,
       'fontSize': fontSize,
+      'audioChapter': audioChapter?.toJson() ?? ''
     };
   }
 }

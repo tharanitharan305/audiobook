@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:uuid/uuid.dart';
-
+import 'dart:async';
+import 'package:just_audio/just_audio.dart';
 import 'model.dart';
 
 class MockAudioService implements AudioService {
@@ -155,4 +156,117 @@ abstract class AudioService {
       String documentId,
       String noteId,
       );
+}
+
+
+class AudioEngineService {
+  final AudioPlayer _player = AudioPlayer();
+
+  StreamSubscription? _positionSub;
+  StreamSubscription? _durationSub;
+  StreamSubscription? _playerStateSub;
+
+  /// ==========================
+  /// Streams Exposed to BLoC
+  /// ==========================
+  final _positionController = StreamController<Duration>.broadcast();
+  final _durationController = StreamController<Duration>.broadcast();
+  final _isPlayingController = StreamController<bool>.broadcast();
+
+  Stream<Duration> get positionStream => _positionController.stream;
+  Stream<Duration> get durationStream => _durationController.stream;
+  Stream<bool> get isPlayingStream => _isPlayingController.stream;
+
+  /// ==========================
+  /// INIT LISTENERS
+  /// ==========================
+  void init() {
+    _positionSub = _player.positionStream.listen((pos) {
+      _positionController.add(pos);
+    });
+
+    _durationSub = _player.durationStream.listen((dur) {
+      _durationController.add(dur ?? Duration.zero);
+    });
+
+    _playerStateSub = _player.playerStateStream.listen((state) {
+      _isPlayingController.add(state.playing);
+    });
+    _player.processingStateStream.listen((state) {
+      if (state == ProcessingState.ready) {
+        final dur = _player.duration;
+        if (dur != null) {
+          _durationController.add(dur);
+        }
+      }
+    });
+  }
+
+  /// ==========================
+  /// LOAD AUDIO
+  /// ==========================
+  Future<void> load(String url) async {
+    await _player.setUrl(url);
+    final duration = _player.duration;
+    if (duration != null) {
+      _durationController.add(duration);
+    }
+  }
+
+  /// ==========================
+  /// PLAY
+  /// ==========================
+  Future<void> play() async {
+    await _player.play();
+  }
+
+  /// ==========================
+  /// PAUSE
+  /// ==========================
+  Future<void> pause() async {
+    await _player.pause();
+  }
+
+  /// ==========================
+  /// SEEK
+  /// ==========================
+  Future<void> seek(Duration position) async {
+    await _player.seek(position);
+  }
+
+  /// ==========================
+  /// SPEED
+  /// ==========================
+  Future<void> setSpeed(double speed) async {
+    await _player.setSpeed(speed);
+  }
+
+  /// ==========================
+  /// STOP
+  /// ==========================
+  Future<void> stop() async {
+    await _player.stop();
+  }
+
+  /// ==========================
+  /// GET CURRENT VALUES
+  /// ==========================
+  Duration get currentPosition => _player.position;
+  Duration? get currentDuration => _player.duration;
+  bool get isPlaying => _player.playing;
+
+  /// ==========================
+  /// DISPOSE
+  /// ==========================
+  Future<void> dispose() async {
+    await _positionSub?.cancel();
+    await _durationSub?.cancel();
+    await _playerStateSub?.cancel();
+
+    await _positionController.close();
+    await _durationController.close();
+    await _isPlayingController.close();
+
+    await _player.dispose();
+  }
 }
