@@ -1,5 +1,7 @@
 import 'package:audiobook/dashboard/bloc/dashboard_event.dart';
 import 'package:audiobook/dashboard/data/model.dart';
+import 'package:audiobook/summarize/data/summary_service.dart';
+import 'package:audiobook/summarize/ui/summaryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -137,7 +139,9 @@ class Doccard extends StatelessWidget {
       ),
 
       OutlinedButton.icon(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SummaryScreen(summary: SummaryService().getSummaryById("id"),),));
+        },
         icon: const Icon(Icons.menu_book_outlined, size: 18),
         label: const Text("Summarize"),
       ),

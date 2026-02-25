@@ -1,3 +1,6 @@
+import 'package:audiobook/home.dart';
+import 'package:audiobook/summarize/bloc/summary_bloc.dart';
+import 'package:audiobook/summarize/data/summary_service.dart';
 import 'package:audiobook/theme/bloc/themeBloc.dart';
 import 'package:audiobook/theme/bloc/themeState.dart';
 import 'package:audiobook/theme/data/app_theme.dart';
@@ -21,17 +24,21 @@ void main() {
 final dashBoardService = DashboardService();
 final dashboardRepo = DashboardRepo(service: dashBoardService);
 final dashboardBloc = DashboardBloc(dashboardRepo: dashboardRepo);
+final summaryService = SummaryService();
+final summaryBloc = SummaryBloc(service: summaryService);
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (_) => themeService),
         RepositoryProvider(create: (_) => dashboardRepo),
+        RepositoryProvider(create: (_)=> summaryService)
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => themeBloc),
           BlocProvider(create: (_) => loginBloc),
           BlocProvider(create: (_) => dashboardBloc),
+          BlocProvider(create: (_)=>summaryBloc)
         ],
         child: const MyApp(),
       ),
@@ -55,7 +62,7 @@ class MyApp extends StatelessWidget {
           home: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               if (state is LoggedIn) {
-                return Dashboard();
+                return HomeScreen();
               }
               return LoginPage();
             },
